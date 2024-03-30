@@ -9,10 +9,9 @@ services:
     image: docker.io/library/mariadb:10
     restart: unless-stopped
     volumes:
-      - /home/daniel/stacks/paperless/dbdata:/var/lib/mysql
+      - "${PAPERLESS_HOST_ROOT_FOLDER}/dbdata:/var/lib/mysql"
     env_file:
       - .env
-      
   webserver:
     image: ghcr.io/paperless-ngx/paperless-ngx:latest
     restart: unless-stopped
@@ -24,13 +23,12 @@ services:
     ports:
       - 8001:8000
     volumes:
-      - /home/daniel/stacks/paperless/data:/usr/src/paperless/data
-      - /home/daniel/stacks/paperless/media:/usr/src/paperless/media
-      - /home/daniel/stacks/paperless//export:/usr/src/paperless/export
-      - /home/daniel/stacks/paperless//consume:/usr/src/paperless/consume
+      - "${PAPERLESS_HOST_ROOT_FOLDER}/data:/usr/src/paperless/data"
+      - "${PAPERLESS_HOST_ROOT_FOLDER}/media:/usr/src/paperless/media"
+      - "${PAPERLESS_HOST_ROOT_FOLDER}/export:/usr/src/paperless/export"
+      - "${PAPERLESS_HOST_ROOT_FOLDER}/consume:/usr/src/paperless/consume"
     env_file:
       - .env
-
   gotenberg:
     image: docker.io/gotenberg/gotenberg:7.10
     restart: unless-stopped
